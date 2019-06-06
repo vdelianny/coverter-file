@@ -1,0 +1,51 @@
+<div class="col-md-5 mx-auto">
+	<div class="card">
+		<div class="card-header">
+			<i>&#xe825;</i>
+			<span>Añadir archivo</span>
+		</div>
+		<div class="card-body">
+			<form action="/articles/new-article" enctype="multipart/form-data" method="POST">
+				<div class="form-group">
+					<input type="text" name="title" class="form-control" placeholder="Título">
+				</div>
+				<div class="form-group">
+					<label for="category">Categorías</label>
+					<select class="form-control" id="category" name="category">
+						<option value="Revistas Cientificas">
+							Revistas Cientificas
+						</option>
+						<option value="Publicaciones Institucionales">
+							Publicaciones Institucionales
+						</option>
+						<option value="Ciencia, Hombre y Ambiente">
+							Ciencia, Hombre y Ambiente
+						</option>
+						<option value="Gerencia">
+							Gerencia
+						</option>
+						<option value="Educación, Humanidades y Artes">
+							Educación, Humanidades y Artes
+						</option>
+						<option value="Cultura y Extensión">
+							Cultura y Extensión
+						</option>
+					</select>
+				</div>
+				<!--
+				<div class="form-group mb-4">
+					<label for="fileImage">Imagen portada</label>
+					<input id="fileImage" type="file" name="avatar">
+				</div>
+			-->
+				<div class="form-group mb-4">
+					<label for="fileArticle">Artículo</label>
+					<input id="fileArticle" type="file" name="body">
+				</div>
+				<div class="form-group mt-4">
+					<button class="btn btn-primary w-100" type="submit">Guardar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

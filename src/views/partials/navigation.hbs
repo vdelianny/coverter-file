@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg py-2 py-md-4">
+	<div class="container">
+		<a class="navbar-brand" href="/">Fondo editorial</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navPrincipal">
+			<div class="navbar-nav ml-auto">
+				{{#if user}}
+					<a class="nav-item nav-link" href="/users/logout">
+						<i>&#xe80c;</i>
+						Cerrar sesión
+					</a>
+				{{else}}
+					<a class="nav-item nav-link" href="/users/signin">
+						<i>&#xf2c0;</i>
+						Ingresar
+					</a>
+					<a class="nav-item nav-link" href="/users/signup">
+						<i>&#xf1fa;</i>
+						Registrarse
+					</a>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</nav>

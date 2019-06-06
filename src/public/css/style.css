@@ -1,0 +1,163 @@
+/*-------------------------------- General styles --------------------------------*/
+@font-face {
+	font-family: 'fontello';
+	src: url('../font/fontello.eot');
+	src: url('../font/fontello.eot') format('embedded-opentype'),
+		url('../font/fontello.woff') format('woff'),
+       	url('../font/fontello.ttf') format('truetype'),
+       	url('../font/fontello.svg') format('svg');
+  	font-weight: normal;
+  	font-style: normal;
+}
+body{
+	background-color: #f4f4f4;
+	color: #474747;
+    font-family: Roboto;
+    font-weight: 300;
+    min-height: 100vh;
+}
+i {
+	font-family: "fontello";
+	font-style: normal;
+	font-weight: normal;
+	margin-right: .1em; 
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	-webkit-box-shadow: 0 0 0px 1000px #FFF inset;
+  	transition: background-color 5000s ease-in-out 0s;
+}
+input{
+	max-width: 100%;
+}
+input.form-control{
+    border: none;
+    border-bottom: 1px solid #e3e3e3;
+    border-radius: 0px;
+}
+input.form-control:focus{
+	box-shadow: none;
+	border-color: #2cc285;
+}
+h3{
+	font-weight: 300;
+    font-size: 1.5rem;
+}
+a:hover{
+	text-decoration: none;
+}
+.btn-primary{
+	background-color: #2cc285;
+	border-color: #2cc285;
+	border-radius: 0px;
+	color: #FFF;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active{
+    background-color: #40d89a;
+    border-color: #40d89a;
+    box-shadow: none;
+}
+.card{
+	border: none;
+	border-radius: 0px;
+	box-shadow: 0px 0px 15px rgba(116, 116, 116, .1);
+}
+.card .card-header{
+	background-color: #2cc285;
+	border-bottom: none;
+	border-radius: 0px;
+	color: #FFF;
+}
+/*------------------------------------ navbar ------------------------------------*/
+.navbar{
+	background-color: #2cc285;
+	box-shadow: 0px 2px 6px rgba(116, 116, 116, .5);
+    /* background: linear-gradient(to left, #27e196, #2fc385); */
+}
+.navbar .nav-item,
+.navbar .navbar-brand,
+.navbar .nav-item .nav-link,
+.navbar .nav-item .dropdown-menu .dropdown-item{
+	color: #FFF;
+}
+
+/*------------------------------------ Articles ------------------------------------*/
+.articles .card .title{
+	font-size: 1.1rem;
+	font-weight: 300;
+}
+.articles .card .category{
+	font-size: .9rem;
+	font-weight: 500;
+}
+.articles .card .details .btn-primary{
+	background: #FFF;
+    border-color: transparent;
+    color: #2fc385;
+    font-weight: 500;
+}
+.articles .card .details .btn-primary:hover{
+    background: linear-gradient(to left, #27e196, #2fc385);
+    color: #FFF;
+}
+.articles .btn-add{
+	position: absolute;
+	bottom: 10vh;
+	right: 5vw;
+}
+.articles .btn-add a{
+	box-shadow: 0px 2px 5px rgba(116, 116, 116, .5);
+	font-size: 2.5rem;
+    padding: .5rem 1.2rem;
+}
+.read-article .title{
+	font-weight: 600;
+    font-size: 2rem;
+    color: #747474;
+}
+.read-article .username{
+	font-size: 0.9rem;
+}
+
+/*------------------------------------ Modal ------------------------------------*/
+.modalExport .modal-content{
+    border: none;
+	border-radius: 0px;
+}
+.modalExport .modal-header{
+	background-color: #2cc285;
+	border-bottom: none;
+	border-radius: 0px;
+	color: #FFF;
+}
+.modalExport .modal-body .document{
+	color: #f7f7f7;
+}
+.modalExport .modal-body .document i{
+	font-size: 2rem;
+}
+.modalExport .modal-body .document .btn-pdf{
+	background-color: #42f6ad;
+}
+.modalExport .modal-body .document [class*="btn-"]{
+	transition: background-color 1s;
+}
+.modalExport .modal-body .document [class*="btn-"]:hover{
+	background-color: #2b9a6d;
+}
+.modalExport .modal-body .document .btn-epub{
+	background-color: #27e196;
+}
+.modalExport .modal-body .document .btn-docx{
+	background-color: #2cc285;
+}

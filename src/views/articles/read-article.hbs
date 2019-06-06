@@ -1,0 +1,59 @@
+<div>
+	<div class="read-article">
+		<h1 class="title">{{article.title}}</h1>
+		<p class="username mb-0">Subido por: <strong>{{article.user}}</strong></p>
+		<hr>
+		<p class="export text-right mb-5">
+			<button type="button" data-toggle="modal" class="btn btn-primary" data-target="#modalExport">
+				<i>&#xe82c;</i>
+				Exportar archivo
+			</button>
+		</p>
+		<div>
+			{{{article.body}}}
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade modalExport" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="modalExportLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content pb-4">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalExportLabel">Exportar archivo</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<p>Selecciona el formato en el que deseas descargar el documento.</p>
+					<div class="row justify-content-center mt-4">
+					    <div class="col-12 col-md-2 px-0">
+							<a class="document" href="/articles/export/pdf/{{article.id}}">
+								<div class="btn-pdf py-1">
+									<i>&#xf1c1;</i>
+									<p class="mb-0">PDF</p>
+								</div>
+							</a>
+					    </div>
+					    <div class="col-12 col-md-2 px-0">
+							<a class="document" href="/articles/export/pdf/{{_id}}">
+								<div class="btn-epub py-1">
+									<i>&#xf0f6;</i>
+									<p class="mb-0">EPUB</p>
+								</div>
+							</a>
+					    </div>
+					    <div class="col-12 col-md-2 px-0">
+							<a class="document" href="/articles/export/pdf/{{_id}}">
+								<div class="btn-docx py-1">
+									<i>&#xf1c2;</i>
+									<p class="mb-0">DOCX</p>
+								</div>
+							</a>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
