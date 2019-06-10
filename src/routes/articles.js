@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Article = require('../models/Article');
 const {isAuthenticated} = require('../helpers/auth');
+const fs = require('fs');
 const mammoth = require('mammoth');
 const pdf = require('html-pdf');
-
+const Epub = require('epub-gen');
+const htmlToText = require('html-to-text');
 
 //routes get
 router.get('/', async (req, res) => {
@@ -23,7 +25,15 @@ router.get('/articles/read/:id', async (req, res) => {
 router.get('/articles/export/pdf/:id', async (req, res) => {
 	const article = await Article.findById(req.params.id);
 	const route = __dirname+'/../../pdf/'+req.params.id+'.pdf';
-	pdf.create(article.body).toFile(route, function (err, response) {
+	const config = {
+		"border": {
+			"top": "3cm",
+			"right": "3cm",
+			"bottom": "2.5cm",
+			"left": "2.5cm"
+		}
+	}
+	pdf.create(article.body, config).toFile(route, function (err, response) {
         if (err) {
         	console.log(err);
         	return;
@@ -32,6 +42,40 @@ router.get('/articles/export/pdf/:id', async (req, res) => {
     });
 });
 
+router.get('/articles/export/epub/:id', async (req, res) => {
+	const article = await Article.findById(req.params.id);
+	const route = __dirname+'/../../epub/'+req.params.id+'.epub';
+	const option = {
+        title: article.title,
+        author: article.user,
+        content: [{
+                title: article.title,
+                data: article.body,
+            }
+        ]
+    };
+    fs.open(route, 'w', function (err, file) {
+		if (err) throw err;
+		console.log('Saved!');
+    	new Epub(option, route).promise.then(
+    		() => res.download(route),
+    		err => console.error("Failed to generate", err)
+	    );
+	});
+});
+
+router.get('/articles/export/text/:id', async (req, res) => {
+	const article = await Article.findById(req.params.id);
+	const route = __dirname+'/../../text/'+req.params.id+'.txt';	
+	const text = htmlToText.fromString(article.body);
+	if (text != null) {
+		fs.writeFile(route, text, function (err) {
+			if (err) throw err;
+			console.log("Saved text into file");
+			res.download(route);		
+		});
+	}
+});
 
 
 function transformAlign(element) {
@@ -39,7 +83,6 @@ function transformAlign(element) {
         element.children.forEach(transformAlign);
     }
     if (element.type === "paragraph") {
-    	console.log(element);
         if (element.alignment === "center") {
             element.styleName = "textCenter";
         } else if (element.alignment === "right") {
@@ -52,7 +95,7 @@ function transformAlign(element) {
 //routes post
 router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 	const body = req.files.body;
-	const { title, category } = req.body;
+	const { title } = req.body;
 	const routeFile = __dirname+'/../../uploads/'+body.md5+'.docx';
 
 	const options = {
@@ -70,7 +113,7 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 	    })
 	};
 	
-	if (!title || !category || Object.keys(req.files).length == 0) {
+	if (!title || Object.keys(req.files).length == 0) {
 		console.log('No files were uploaded.');
 	} else {
 		body.mv(routeFile, function(err) {
@@ -79,9 +122,8 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 			}
 			mammoth.convertToHtml({path: routeFile}, options)
 			    .then(async (result) =>{
-			        var html = result.value;
-					const newArticle = new Article({title, category, body: html});
-					newArticle.user = req.user.name;
+			        const body = result.value;
+					const newArticle = new Article({title, body, user: req.user.name});
 					await newArticle.save();
 			    }).done(async () => {
 			    	res.redirect('/');

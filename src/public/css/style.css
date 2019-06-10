@@ -50,8 +50,11 @@ h3{
 	font-weight: 300;
     font-size: 1.5rem;
 }
-a:hover{
+a:hover,
+a:focus,
+a:active{
 	text-decoration: none;
+	outline: none;
 }
 .btn-primary{
 	background-color: #2cc285;
@@ -62,7 +65,8 @@ a:hover{
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus,
-.btn-primary:not(:disabled):not(.disabled):active{
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):active:focus{
     background-color: #40d89a;
     border-color: #40d89a;
     box-shadow: none;
@@ -90,13 +94,18 @@ a:hover{
 .navbar .nav-item .dropdown-menu .dropdown-item{
 	color: #FFF;
 }
-
+.navbar .navbar-toggler .navbar-toggler-icon i{
+    color: #FFF;
+}
+.navbar-toggler:focus {
+    outline: none;
+}
 /*------------------------------------ Articles ------------------------------------*/
 .articles .card .title{
 	font-size: 1.1rem;
 	font-weight: 300;
 }
-.articles .card .category{
+.articles .card .user{
 	font-size: .9rem;
 	font-weight: 500;
 }

@@ -5,10 +5,11 @@
 			<span>Añadir archivo</span>
 		</div>
 		<div class="card-body">
-			<form action="/articles/new-article" enctype="multipart/form-data" method="POST">
+			<form action="/articles/new-article" method="POST">
 				<div class="form-group">
 					<input type="text" name="title" class="form-control" placeholder="Título">
 				</div>
+			<!--
 				<div class="form-group">
 					<label for="category">Categorías</label>
 					<select class="form-control" id="category" name="category">
@@ -31,13 +32,12 @@
 							Cultura y Extensión
 						</option>
 					</select>
-				</div>
-				<!--
+				</div>				
+			-->
 				<div class="form-group mb-4">
 					<label for="fileImage">Imagen portada</label>
 					<input id="fileImage" type="file" name="avatar">
 				</div>
-			-->
 				<div class="form-group mb-4">
 					<label for="fileArticle">Artículo</label>
 					<input id="fileArticle" type="file" name="body">
