@@ -105,6 +105,12 @@ a:active{
 	font-size: 1.1rem;
 	font-weight: 300;
 }
+.articles .card .card-body{
+	max-height: 20rem;
+}
+.articles .card .card-body img{
+	max-height: 10rem;
+}
 .articles .card .user{
 	font-size: .9rem;
 	font-weight: 500;
@@ -120,7 +126,7 @@ a:active{
     color: #FFF;
 }
 .articles .btn-add{
-	position: absolute;
+	position: fixed;
 	bottom: 10vh;
 	right: 5vw;
 }

@@ -8,6 +8,14 @@ const pdf = require('html-pdf');
 const Epub = require('epub-gen');
 const htmlToText = require('html-to-text');
 
+
+const multer  = require('multer');
+const storage = multer.diskStorage({
+    destination: './images'
+});
+const upload = multer({storage: storage}).single('image');
+
+
 //routes get
 router.get('/', async (req, res) => {
 	const articles = await Article.find().sort({date: 'desc'});
@@ -94,9 +102,10 @@ function transformAlign(element) {
 
 //routes post
 router.post('/articles/new-article', isAuthenticated, async (req, res) => {
-	const body = req.files.body;
+	const { image, body } = req.files;
 	const { title } = req.body;
 	const routeFile = __dirname+'/../../uploads/'+body.md5+'.docx';
+	const routeImage = __dirname+'/../public/images/'+image.md5+'.jpg';
 
 	const options = {
 		transformDocument: transformAlign,
@@ -117,13 +126,16 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 		console.log('No files were uploaded.');
 	} else {
 		body.mv(routeFile, function(err) {
-			if (err){
-				return res.status(500).send(err);
-			}
+			image.mv(routeImage);
 			mammoth.convertToHtml({path: routeFile}, options)
 			    .then(async (result) =>{
 			        const body = result.value;
-					const newArticle = new Article({title, body, user: req.user.name});
+					const newArticle = new Article({
+						title,
+						body,
+						image: image.md5,
+						user: req.user.name
+					});
 					await newArticle.save();
 			    }).done(async () => {
 			    	res.redirect('/');
