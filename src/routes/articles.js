@@ -102,10 +102,7 @@ function transformAlign(element) {
 
 //routes post
 router.post('/articles/new-article', isAuthenticated, async (req, res) => {
-	const { image, body } = req.files;
-	const { title } = req.body;
-	const routeFile = __dirname+'/../../uploads/'+body.md5+'.docx';
-	const routeImage = __dirname+'/../public/images/'+image.md5+'.jpg';
+	const errors = [];
 
 	const options = {
 		transformDocument: transformAlign,
@@ -122,9 +119,16 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 	    })
 	};
 	
-	if (!title || Object.keys(req.files).length == 0) {
-		console.log('No files were uploaded.');
+	if (!req.body.title || !req.files) {
+		errors.push({text: 'Por favor, ingrese un título'});
+	}
+	if (errors.length > 0) {
+		res.render('articles/new-article', {errors});
 	} else {
+		const { title } = req.body;
+		const { image, body } = req.files;
+		const routeFile = __dirname+'/../../uploads/'+body.md5+'.docx';
+		const routeImage = __dirname+'/../public/images/'+image.md5+'.jpg';
 		body.mv(routeFile, function(err) {
 			image.mv(routeImage);
 			mammoth.convertToHtml({path: routeFile}, options)
@@ -138,8 +142,8 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 					});
 					await newArticle.save();
 			    }).done(async () => {
+					req.flash('success_msg', 'Artículo registrado satisfactoriamente');
 			    	res.redirect('/');
-			    	console.log("saved");
 			    });
 		});
 	}

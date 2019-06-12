@@ -106,10 +106,10 @@ a:active{
 	font-weight: 300;
 }
 .articles .card .card-body{
-	max-height: 20rem;
+	height: 20rem;
 }
 .articles .card .card-body img{
-	max-height: 10rem;
+	height: 10rem;
 }
 .articles .card .user{
 	font-size: .9rem;
