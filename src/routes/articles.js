@@ -7,6 +7,7 @@ const mammoth = require('mammoth');
 const pdf = require('html-pdf');
 const Epub = require('epub-gen');
 const htmlToText = require('html-to-text');
+const randomInt = require('random-int');
 
 
 const multer  = require('multer');
@@ -111,9 +112,21 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 	        "p[style-name='textRight'] => p.text-right:fresh"
 	    ],
 	    convertImage: mammoth.images.imgElement(function(image) {
-	        return image.read("base64").then(function(imageBuffer) {
+	    	return image.read().then(function(imageBuffer) {
+	    		var img = randomInt(10, 1000);
+	    		fs.writeFile(
+	    			__dirname+'/../public/images/'+req.files.body.md5+'/'+img+'.jpg',
+	    			imageBuffer,
+	    			'binary',
+	    			function(err) {
+	    				if(err) {
+	                    	console.log(err);
+	                	} else {
+	                    	console.log("The file was saved!");
+	                	}
+	            }); 
 	            return {
-	                src: 'data:'+image.contentType+';base64,'+imageBuffer
+	                src: 'http://localhost:3000/images/'+req.files.body.md5+'/'+img+'.jpg'
 	            };
 	        });
 	    })
@@ -131,6 +144,9 @@ router.post('/articles/new-article', isAuthenticated, async (req, res) => {
 		const routeImage = __dirname+'/../public/images/'+image.md5+'.jpg';
 		body.mv(routeFile, function(err) {
 			image.mv(routeImage);
+			fs.mkdir(__dirname+'/../public/images/'+body.md5, { recursive: true }, (err) => {
+				if (err) console.log(err);
+			});
 			mammoth.convertToHtml({path: routeFile}, options)
 			    .then(async (result) =>{
 			        const body = result.value;
